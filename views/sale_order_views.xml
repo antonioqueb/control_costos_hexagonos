@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_cost_control" model="ir.ui.view">
+        <field name="name">sale.order.form.cost.control</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Corregido: Insertar visible_amount_total justo después del tax_totals -->
+            <xpath expr="//group[contains(@class, 'oe_subtotal_footer')]/field[@name='tax_totals']" position="after">
+                <field name="visible_amount_total" nolabel="0"
+                    class="oe_subtotal_footer_separator"
+                    widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+
+            <!-- Campos en líneas de la orden (Corregido con <list>) -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="visible_price_unit" string="Precio Unitario"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+                <field name="visible_price_subtotal" string="Subtotal"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

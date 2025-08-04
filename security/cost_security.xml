@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Categoría de grupos -->
+        <record id="module_category_cost_control" model="ir.module.category">
+            <field name="name">Control de Costos</field>
+            <field name="description">Control de visibilidad de valores de costo</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Grupo para ver costos de productos -->
+        <record id="group_view_cost" model="res.groups">
+            <field name="name">Ver Costos de Productos</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Permite ver los costos reales de los productos</field>
+        </record>
+
+        <!-- Grupo para ver precios de venta -->
+        <record id="group_view_sale_price" model="res.groups">
+            <field name="name">Ver Precios de Venta</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Permite ver los precios de venta reales</field>
+        </record>
+
+        <!-- Grupo para ver precios de compra -->
+        <record id="group_view_purchase_price" model="res.groups">
+            <field name="name">Ver Precios de Compra</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Permite ver los precios de compra reales</field>
+        </record>
+
+        <!-- Grupo para ver totales de compra -->
+        <record id="group_view_purchase_total" model="res.groups">
+            <field name="name">Ver Totales de Compra</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Permite ver los totales de órdenes de compra</field>
+        </record>
+
+        <!-- Grupo para ver totales de venta -->
+        <record id="group_view_sale_total" model="res.groups">
+            <field name="name">Ver Totales de Venta</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Permite ver los totales de órdenes de venta</field>
+        </record>
+
+        <!-- Grupo para ver costos de stock -->
+        <record id="group_view_stock_cost" model="res.groups">
+            <field name="name">Ver Costos de Stock</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Permite ver los costos en movimientos de stock</field>
+        </record>
+
+        <!-- Grupo administrador que tiene todos los permisos -->
+        <record id="group_cost_admin" model="res.groups">
+            <field name="name">Administrador de Costos</field>
+            <field name="category_id" ref="module_category_cost_control"/>
+            <field name="comment">Acceso completo a todos los valores de costo</field>
+            <field name="implied_ids" eval="[(4, ref('group_view_cost')),
+                                             (4, ref('group_view_sale_price')),
+                                             (4, ref('group_view_purchase_price')),
+                                             (4, ref('group_view_purchase_total')),
+                                             (4, ref('group_view_sale_total')),
+                                             (4, ref('group_view_stock_cost'))]"/>
+        </record>
+    </data>
+</odoo>

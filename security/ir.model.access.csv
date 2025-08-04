@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_cost_admin,product.template.cost.admin,product.model_product_template,group_cost_admin,1,1,1,1
+access_sale_order_cost_admin,sale.order.cost.admin,sale.model_sale_order,group_cost_admin,1,1,1,1
+access_purchase_order_cost_admin,purchase.order.cost.admin,purchase.model_purchase_order,group_cost_admin,1,1,1,1
