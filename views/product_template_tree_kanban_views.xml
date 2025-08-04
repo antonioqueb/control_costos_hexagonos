@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de lista de productos (Esta parte estaba correcta) -->
+    <record id="view_product_template_tree_cost_control" model="ir.ui.view">
+        <field name="name">product.template.tree.cost.control</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="attributes">
+                <attribute name="groups">control_costos_hexagonos.group_view_cost</attribute>
+            </field>
+            <field name="standard_price" position="after">
+                <field name="visible_standard_price" readonly="1"
+                       groups="!control_costos_hexagonos.group_view_cost"
+                       optional="show"/>
+            </field>
+            <field name="list_price" position="attributes">
+                <attribute name="groups">control_costos_hexagonos.group_view_sale_price</attribute>
+            </field>
+            <field name="list_price" position="after">
+                <field name="visible_list_price" readonly="1"
+                       groups="!control_costos_hexagonos.group_view_sale_price"
+                       optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Vista Kanban de productos (CORREGIDA) -->
+    <record id="product_template_kanban_view_cost_control" model="ir.ui.view">
+        <field name="name">product.template.kanban.cost.control</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <!-- Posicionarse después del precio de venta para agregar los campos de costo -->
+            <xpath expr="//field[@name='list_price']" position="after">
+                <div>
+                    <!-- Mostrar costo real solo al grupo autorizado -->
+                    <field name="standard_price" widget="monetary" options="{'currency_field': 'currency_id'}"
+                           groups="control_costos_hexagonos.group_view_cost"/>
+                    <!-- Mostrar costo visible (0.00) a los demás -->
+                    <field name="visible_standard_price" widget="monetary" options="{'currency_field': 'currency_id'}"
+                           groups="!control_costos_hexagonos.group_view_cost"/>
+                </div>
+            </xpath>
+
+            <!-- Ocultar el precio de venta original si no se tiene permiso -->
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="groups">control_costos_hexagonos.group_view_sale_price</attribute>
+            </xpath>
+
+            <!-- Agregar el campo de precio de venta visible para los no autorizados -->
+            <xpath expr="//field[@name='list_price']" position="after">
+                 <field name="visible_list_price" readonly="1"
+                       groups="!control_costos_hexagonos.group_view_sale_price"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

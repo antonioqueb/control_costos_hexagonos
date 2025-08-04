@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'data/cost_groups.xml',
         'views/product_template_views.xml',
+        'views/product_template_tree_kanban_views.xml', 
         'views/purchase_order_views.xml',
         'views/sale_order_views.xml',
     ],
