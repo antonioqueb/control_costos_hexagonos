@@ -9,7 +9,7 @@
         - Control granular por grupos de usuario
         - Aplica a productos, órdenes de compra y ventas
     """,
-    'author': 'Tu Empresa',
+    'author': 'Alphaqueb Consulting SAS',
     'depends': ['base', 'product', 'purchase', 'sale', 'stock'],
     'data': [
         'security/cost_security.xml',
