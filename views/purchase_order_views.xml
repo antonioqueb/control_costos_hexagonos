@@ -6,26 +6,34 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
 
-            <!-- Insertar visible_amount_total después del bloque tax_totals -->
+            <!-- Total visible para usuarios sin permiso -->
             <xpath expr="//group[@class='oe_subtotal_footer']/field[@name='tax_totals']" position="after">
                 <field name="visible_amount_total" nolabel="0"
                     class="oe_subtotal_footer_separator"
-                    widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    widget="monetary" options="{'currency_field': 'currency_id'}"
+                    groups="!control_costos_hexagonos.group_view_purchase_total"/>
             </xpath>
 
-            <!-- Campos en líneas de la orden (Corregido con <list>) -->
-            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
-                <field name="visible_price_unit" string="Precio Unitario"/>
-            </xpath>
+            <!-- price_unit: visible solo para admin de costos -->
             <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="attributes">
-                <attribute name="column_invisible">1</attribute>
+                <attribute name="groups">control_costos_hexagonos.group_cost_admin</attribute>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
-                <field name="visible_price_subtotal" string="Subtotal"/>
+            <!-- visible_price_unit: visible solo para usuarios SIN permiso -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="visible_price_unit" string="Precio Unitario" readonly="1"
+                       groups="!control_costos_hexagonos.group_cost_admin"/>
             </xpath>
+
+            <!-- price_subtotal: visible solo para admin -->
             <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="attributes">
-                <attribute name="column_invisible">1</attribute>
+                <attribute name="groups">control_costos_hexagonos.group_view_purchase_price</attribute>
+            </xpath>
+
+            <!-- visible_price_subtotal: visible solo para usuarios SIN permiso -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+                <field name="visible_price_subtotal" string="Subtotal" readonly="1"
+                       groups="!control_costos_hexagonos.group_view_purchase_price"/>
             </xpath>
 
         </field>
